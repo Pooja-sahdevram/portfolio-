@@ -189,7 +189,7 @@ export default function App() {
         setForm({ name: "", email: "", message: "" });
         setTimeout(() => setSent(false), 3000);
       } else {
-        alert("Kuch error hua, dobara try karo 😔");
+        alert("Something Went wrong😔");
       }
     } catch (err) {
       alert("Network error! Check your connection.");
