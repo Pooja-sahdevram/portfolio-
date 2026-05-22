@@ -505,7 +505,7 @@ export default function App() {
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-3 pt-2">
-                  {[["4+", "Projects"], ["2", "Companies"], ["🤖", "AI-Powered"]].map(([num, label]) => (
+                  {[["40+", "Projects"], ["2", "Companies"], ["🤖", "AI-Powered"]].map(([num, label]) => (
                     <div key={label} className="rounded-2xl bg-[#EEF4EC] p-4 text-center">
                       <p className="text-2xl font-black text-[#5F7764]">{num}</p>
                       <p className="text-xs text-[#7B9275] mt-1">{label}</p>
