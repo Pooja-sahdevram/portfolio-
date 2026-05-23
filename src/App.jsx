@@ -863,7 +863,6 @@ export default function App() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2D4731] text-white text-sm shadow hover:bg-[#3d5e41] transition-colors font-medium"
                   >
-                    View Project →
                   </motion.a>
                 </div>
               </motion.div>
