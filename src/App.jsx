@@ -930,17 +930,8 @@ export default function App() {
                     ))}
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-[#2D4731]">{project.title}</h3>
-                  <p className="text-[#7A9480] text-sm leading-7 mb-8">{project.desc}</p>
-                  <motion.a
-                    whileHover={{ scale: 1.04, x: 3 }}
-                    whileTap={{ scale: 0.96 }}
-                    href={project.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2D4731] text-white text-sm shadow hover:bg-[#3d5e41] transition-colors font-medium"
-                  >
-                    View Project ↗
-                  </motion.a>
+                  <p className="text-[#7A9480] text-sm leading-7">{project.desc}</p>
+
                 </div>
               </motion.div>
             ))}
