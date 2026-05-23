@@ -58,7 +58,7 @@ function Counter({ target, suffix = "" }) {
 }
 
 /* ─── Magnetic Button ─────────────────────────────────────── */
-function MagneticBtn({ children, className, href, tel }) {
+function MagneticBtn({ children, className, href, tel, download }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -72,17 +72,19 @@ function MagneticBtn({ children, className, href, tel }) {
   };
   const handleLeave = () => { x.set(0); y.set(0); };
 
-  const Tag = href ? "a" : "button";
+  const finalHref = href || (tel ? `tel:${tel}` : undefined);
+
   return (
     <motion.div ref={ref} style={{ x: sx, y: sy }} onMouseMove={handleMove} onMouseLeave={handleLeave}>
-      <Tag
-        href={href || (tel ? `tel:${tel}` : undefined)}
-        target={href ? "_blank" : undefined}
+      <a
+        href={finalHref}
+        target={href && !download ? "_blank" : undefined}
         rel={href ? "noreferrer" : undefined}
+        download={download || undefined}
         className={className}
       >
         {children}
-      </Tag>
+      </a>
     </motion.div>
   );
 }
@@ -142,7 +144,6 @@ function CursorGlow() {
 function GeometricBg() {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
-      {/* Subtle dot grid */}
       <div
         className="absolute inset-0 opacity-[0.035]"
         style={{
@@ -150,10 +151,8 @@ function GeometricBg() {
           backgroundSize: "40px 40px",
         }}
       />
-      {/* Large soft gradient orbs — static, no movement */}
       <div className="absolute top-[-10%] left-[-10%] h-[600px] w-[600px] rounded-full bg-[#DCE8D7] opacity-30 blur-[120px]" />
       <div className="absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-[#C7DAC0] opacity-25 blur-[100px]" />
-
     </div>
   );
 }
@@ -434,7 +433,7 @@ export default function App() {
               using MERN, Shopify, and WordPress — supercharged with AI.
             </motion.p>
 
-            {/* Refined status tags */}
+            {/* Status tags */}
             <motion.div
               variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.7 } } }}
               initial="hidden"
@@ -468,7 +467,8 @@ export default function App() {
                 LinkedIn ↗
               </MagneticBtn>
               <MagneticBtn
-                href="/resume.pdf"
+                href="/Pooja_Sahdev_Ram_Resume.pdf"
+                download="Pooja_Sahdev_Ram_Resume"
                 className="px-7 py-3.5 rounded-full bg-[#5F7764] text-white shadow-lg hover:bg-[#4a6350] transition-colors font-semibold text-sm tracking-wide"
               >
                 Download CV ↓
@@ -481,16 +481,30 @@ export default function App() {
               </MagneticBtn>
             </div>
 
-            {/* CONTACT INFO */}
+            {/* CONTACT INFO — all clickable */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
               className="mt-10 text-[#7A9480] space-y-1.5 text-sm"
             >
-              <p className="flex items-center gap-2"><span className="w-4 text-center">📍</span> Ahmedabad, Gujarat, India</p>
-              <p className="flex items-center gap-2"><span className="w-4 text-center">📞</span> +91 9887629382</p>
-              <p className="flex items-center gap-2"><span className="w-4 text-center">✉️</span> poojasahdevram@gmail.com</p>
+              <p className="flex items-center gap-2">
+                <span className="w-4 text-center">📍</span> Ahmedabad, Gujarat, India
+              </p>
+              <a
+                href="tel:+919887629382"
+                className="flex items-center gap-2 hover:text-[#5F7764] transition-colors group"
+              >
+                <span className="w-4 text-center">📞</span>
+                <span className="group-hover:underline underline-offset-2">+91 9887629382</span>
+              </a>
+              <a
+                href="mailto:poojasahdevram@gmail.com"
+                className="flex items-center gap-2 hover:text-[#5F7764] transition-colors group"
+              >
+                <span className="w-4 text-center">✉️</span>
+                <span className="group-hover:underline underline-offset-2">poojasahdevram@gmail.com</span>
+              </a>
               <div className="flex items-center gap-2 mt-4 pt-4 border-t border-[#DCE8D7]">
                 <motion.span
                   animate={{ scale: [1, 1.5, 1], opacity: [1, 0.4, 1] }}
@@ -510,8 +524,6 @@ export default function App() {
               transition={{ duration: 0.9, delay: 0.3, type: "spring" }}
               className="relative z-10 bg-white/75 backdrop-blur-2xl border border-white/50 rounded-[40px] p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.07)] overflow-hidden"
             >
-
-
               <div className="relative z-10 space-y-8">
                 <div className="flex items-end gap-3">
                   <div>
@@ -521,7 +533,6 @@ export default function App() {
                       <span className="text-2xl font-semibold text-[#5F7764] ml-1">Years</span>
                     </h3>
                   </div>
-                  {/* Mini decorative line */}
                   <div className="flex-1 border-b border-dashed border-[#C5D8C0] mb-2" />
                 </div>
 
@@ -564,7 +575,6 @@ export default function App() {
 
       {/* ── SKILLS ───────────────────────────────────────────── */}
       <section id="skills" className="px-6 md:px-20 py-24 bg-white relative overflow-hidden">
-        {/* Section geometric accent */}
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#C5D8C0] to-transparent" />
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -708,7 +718,6 @@ export default function App() {
                   whileHover={{ x: 4 }}
                   className="md:ml-16 bg-[#F7FAF5] border border-[#E2EADF] rounded-3xl p-8 shadow-sm relative overflow-hidden"
                 >
-                  {/* Timeline dot */}
                   <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -716,7 +725,6 @@ export default function App() {
                     transition={{ delay: index * 0.2 + 0.3, type: "spring" }}
                     className="absolute -left-[2.55rem] top-10 h-3 w-3 rounded-full border-2 border-[#5F7764] bg-white hidden md:block"
                   />
-                  {/* Corner number */}
                   <div className="absolute top-6 right-8 text-6xl font-black text-[#E8F0E5] select-none">
                     0{index + 1}
                   </div>
@@ -823,12 +831,9 @@ export default function App() {
                 whileHover={{ y: -8, scale: 1.01 }}
                 className="group bg-white border border-[#E1EADF] rounded-3xl p-8 shadow-sm relative overflow-hidden cursor-pointer"
               >
-                {/* Large project number */}
                 <div className="absolute top-5 right-7 text-6xl font-black text-[#E8F0E5] group-hover:text-[#DDE8DA] transition-colors select-none">
                   {project.num}
                 </div>
-
-                {/* Top accent bar */}
                 <motion.div
                   className="absolute top-0 left-0 h-[3px] bg-[#5F7764] rounded-t-3xl"
                   initial={{ width: 0 }}
@@ -836,7 +841,6 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.15 + 0.3, duration: 0.5 }}
                 />
-
                 <div className="relative z-10 pt-2">
                   <div className="flex flex-wrap gap-2 mb-5">
                     {project.tags.map((tag) => (
@@ -955,10 +959,28 @@ export default function App() {
                   ) : "Send Message →"}
                 </motion.button>
 
+                {/* Contact links — all clickable */}
                 <div className="flex justify-between pt-2">
-                  <a href="tel:+919887629382" className="flex items-center gap-1 text-xs text-[#5F7764] font-semibold hover:underline">📞 +91 9887629382</a>
-                  <a href="mailto:poojasahdevram@gmail.com" className="flex items-center gap-1 text-xs text-[#5F7764] font-semibold hover:underline">✉️ Email</a>
-                  <a href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-xs text-[#5F7764] font-semibold hover:underline">💼 LinkedIn</a>
+                  <a
+                    href="tel:+919887629382"
+                    className="flex items-center gap-1 text-xs text-[#5F7764] font-semibold hover:underline underline-offset-2"
+                  >
+                    📞 +91 9887629382
+                  </a>
+                  <a
+                    href="mailto:poojasahdevram@gmail.com"
+                    className="flex items-center gap-1 text-xs text-[#5F7764] font-semibold hover:underline underline-offset-2"
+                  >
+                    ✉️ Email
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1 text-xs text-[#5F7764] font-semibold hover:underline underline-offset-2"
+                  >
+                    💼 LinkedIn
+                  </a>
                 </div>
               </div>
             )}
@@ -1128,7 +1150,6 @@ export default function App() {
         viewport={{ once: true }}
         className="bg-[#2D4731] text-white px-6 md:px-20 py-14 text-center relative overflow-hidden"
       >
-        {/* Dot grid overlay */}
         <div
           className="absolute inset-0 opacity-[0.05]"
           style={{
@@ -1152,9 +1173,26 @@ export default function App() {
           </div>
 
           <div className="flex justify-center gap-8 mt-7 flex-wrap">
-            <a href="tel:+919887629382" className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide">+91 9887629382</a>
-            <a href="mailto:poojasahdevram@gmail.com" className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide">poojasahdevram@gmail.com</a>
-            <a href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/" target="_blank" rel="noreferrer" className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide">LinkedIn</a>
+            <a
+              href="tel:+919887629382"
+              className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2"
+            >
+              +91 9887629382
+            </a>
+            <a
+              href="mailto:poojasahdevram@gmail.com"
+              className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2"
+            >
+              poojasahdevram@gmail.com
+            </a>
+            <a
+              href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2"
+            >
+              LinkedIn
+            </a>
           </div>
           <p className="mt-8 text-[#6B8C6E] text-xs tracking-widest uppercase">Designed with AI + creativity by Pooja</p>
         </div>
