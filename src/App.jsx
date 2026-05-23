@@ -164,6 +164,9 @@ export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
+  // ── Mobile menu state ──────────────────────────────────────
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const typed = useTypewriter([
     "I build Shopify Stores",
     "I develop Full-Stack Web Apps",
@@ -333,6 +336,8 @@ export default function App() {
     show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", stiffness: 120, damping: 14 } },
   };
 
+  const navLinks = ["skills", "ai-tools", "services", "projects", "contact"];
+
   return (
     <div className="bg-[#F5F8F2] text-[#2D4731] overflow-hidden relative">
 
@@ -345,14 +350,85 @@ export default function App() {
         style={{ scaleX }}
       />
 
-      {/* NAVBAR */}
+      {/* ── MOBILE NAVBAR ─────────────────────────────────────── */}
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 h-[60px] bg-white/90 backdrop-blur-2xl border-b border-white/40 shadow-sm md:hidden">
+        <span className="font-bold text-[#2D4731] text-sm tracking-wide">Pooja Sahdev Ram</span>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          className="w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-xl border border-[#E2EADF] bg-white/80 transition-colors hover:bg-[#F5F8F2]"
+        >
+          <span
+            className="block w-5 h-[1.5px] bg-[#2D4731] rounded transition-all duration-300"
+            style={{ transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none" }}
+          />
+          <span
+            className="block w-5 h-[1.5px] bg-[#2D4731] rounded transition-all duration-300"
+            style={{ opacity: menuOpen ? 0 : 1, transform: menuOpen ? "scaleX(0)" : "none" }}
+          />
+          <span
+            className="block w-5 h-[1.5px] bg-[#2D4731] rounded transition-all duration-300"
+            style={{ transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }}
+          />
+        </button>
+      </div>
+
+      {/* ── MOBILE DRAWER ─────────────────────────────────────── */}
+      <div
+        className="fixed top-[60px] left-0 right-0 z-40 md:hidden bg-white border-b border-[#E2EADF] overflow-hidden transition-all duration-300"
+        style={{ maxHeight: menuOpen ? "500px" : "0px", opacity: menuOpen ? 1 : 0 }}
+      >
+        <div className="flex flex-col px-5 py-4 gap-1">
+          {navLinks.map((s) => (
+            <a
+              key={s}
+              href={`#${s}`}
+              onClick={() => setMenuOpen(false)}
+              className="px-3 py-2.5 rounded-xl text-[#4A6050] font-medium text-sm hover:bg-[#F5F8F2] transition-colors capitalize"
+            >
+              {s === "ai-tools" ? "AI Tools" : s.charAt(0).toUpperCase() + s.slice(1)}
+            </a>
+          ))}
+          <div className="my-3 border-t border-[#E2EADF]" />
+          {/* LinkedIn */}
+          <a
+            href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-center gap-2 py-3 rounded-full bg-[#2D4731] text-white text-sm font-semibold transition-colors hover:bg-[#3d5e41]"
+          >
+            LinkedIn ↗
+          </a>
+          {/* Download CV */}
+          <a
+            href="/Pooja_Sahdev_Ram_Resume.pdf"
+            download="Pooja_Sahdev_Ram_Resume"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-center gap-2 py-3 rounded-full bg-[#5F7764] text-white text-sm font-semibold transition-colors hover:bg-[#4a6350]"
+          >
+            Download CV ↓
+          </a>
+          {/* Call Me */}
+          <a
+            href="tel:+919887629382"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-center gap-2 py-3 rounded-full border-2 border-[#2D4731] text-[#2D4731] text-sm font-semibold transition-colors hover:bg-[#2D4731] hover:text-white"
+          >
+            📞 Call Me
+          </a>
+        </div>
+      </div>
+
+      {/* ── DESKTOP NAVBAR ────────────────────────────────────── */}
       <motion.div
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6, type: "spring", stiffness: 100 }}
         className="fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex gap-8 px-10 py-4 rounded-full bg-white/80 backdrop-blur-2xl border border-white/50 shadow-lg"
       >
-        {["skills", "ai-tools", "services", "projects", "contact"].map((s) => (
+        {navLinks.map((s) => (
           <motion.a
             key={s}
             href={`#${s}`}
@@ -366,7 +442,7 @@ export default function App() {
       </motion.div>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 py-28 overflow-hidden">
+      <section className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 py-28 pt-[88px] md:pt-28 overflow-hidden">
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 xl:gap-20 items-center w-full"
@@ -481,7 +557,7 @@ export default function App() {
               </MagneticBtn>
             </div>
 
-            {/* CONTACT INFO — all clickable */}
+            {/* CONTACT INFO */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -863,6 +939,7 @@ export default function App() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2D4731] text-white text-sm shadow hover:bg-[#3d5e41] transition-colors font-medium"
                   >
+                    View Project ↗
                   </motion.a>
                 </div>
               </motion.div>
@@ -958,7 +1035,6 @@ export default function App() {
                   ) : "Send Message →"}
                 </motion.button>
 
-                {/* Contact links — all clickable */}
                 <div className="flex justify-between pt-2">
                   <a
                     href="tel:+919887629382"
@@ -1172,24 +1248,13 @@ export default function App() {
           </div>
 
           <div className="flex justify-center gap-8 mt-7 flex-wrap">
-            <a
-              href="tel:+919887629382"
-              className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2"
-            >
+            <a href="tel:+919887629382" className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2">
               +91 9887629382
             </a>
-            <a
-              href="mailto:poojasahdevram@gmail.com"
-              className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2"
-            >
+            <a href="mailto:poojasahdevram@gmail.com" className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2">
               poojasahdevram@gmail.com
             </a>
-            <a
-              href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/"
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2"
-            >
+            <a href="https://www.linkedin.com/in/pooja-sahdev-ram-b7a649239/" target="_blank" rel="noreferrer" className="text-[#A8C5AD] hover:text-white text-xs font-medium transition-colors tracking-wide hover:underline underline-offset-2">
               LinkedIn
             </a>
           </div>
