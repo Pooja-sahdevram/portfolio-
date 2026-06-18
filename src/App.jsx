@@ -443,7 +443,6 @@ export default function App() {
               {[
                 { label: "Building Cool Stuff", dot: "bg-blue-400" },
                 { label: "Debugging Daily", dot: "bg-amber-400" },
-                { label: "Open To Work", dot: "bg-green-400" },
                 { label: "AI-Powered", dot: "bg-purple-400" },
               ].map(({ label, dot }) => (
                 <motion.span
@@ -511,7 +510,6 @@ export default function App() {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="h-2 w-2 rounded-full bg-green-500 inline-block"
                 />
-                {/* <p className="font-medium text-[#5F7764]">Available for freelance</p> */}
               </div>
             </motion.div>
           </div>
@@ -883,7 +881,6 @@ export default function App() {
           >
             <p className="text-xs uppercase tracking-[0.3em] text-[#8AA38C] mb-3 font-semibold">Let's connect</p>
             <h2 className="text-4xl font-bold">Get In Touch</h2>
-            <p className="text-[#8AA38C] mt-3 text-sm">Open for freelance & collaborations</p>
             <div className="flex justify-center mt-4">
               <div className="w-12 h-[2px] bg-[#5F7764] rounded-full" />
             </div>
