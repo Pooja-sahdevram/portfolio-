@@ -881,9 +881,7 @@ export default function App() {
           >
             <p className="text-xs uppercase tracking-[0.3em] text-[#8AA38C] mb-3 font-semibold">Let's connect</p>
             <h2 className="text-4xl font-bold">Get In Touch</h2>
-            <div className="flex justify-center mt-4">
-              <div className="w-12 h-[2px] bg-[#5F7764] rounded-full" />
-            </div>
+           
           </motion.div>
 
           <motion.div
